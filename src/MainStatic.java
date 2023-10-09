@@ -1,5 +1,7 @@
 
 import java.sql.SQLOutput;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import Common.Constant;
 import Object.Student;
@@ -9,13 +11,14 @@ public class MainStatic {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int totalStudent = 0;
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         Student[] st = new Student[6];
-        st[0] = new Student("congbt1",175f,75f,"qwertyuiop","27/07/2000","qwertyuio1","qwertyuiop","2018",7.5f);   //unit test
-        st[1] = new Student("congb2",175f,75f,"qwertyuiop","29/09/2000","qwertyuio2","qwertyuiop","2018",1.5f);
-        st[2] = new Student("congb3",175f,75f,"qwertyuiop","29/09/2000","qwertyuio3","qwertyuiop","2018",4.5f);
-        st[3] = new Student("congb4",175f,75f,"qwertyuiop","29/09/2000","qwertyuio4","qwertyuiop","2018",9.5f);
-        st[4] = new Student("congb5",175f,75f,"qwertyuiop","29/09/2000","qwertyuio5","qwertyuiop","2018",3.5f);
-        st[5] = new Student("congb6",175f,75f,"qwertyuiop","29/09/2000","qwertyuio6","qwertyuiop","2018",5.5f);
+        st[0] = new Student("congbt1",175f,75f,"qwertyuiop",LocalDate.parse("27/07/2000",dateTimeFormatter),"qwertyuio1","qwertyuiop","2018",7.5f);   //unit test
+        st[1] = new Student("congb2",175f,75f,"qwertyuiop",LocalDate.parse("29/09/2000",dateTimeFormatter),"qwertyuio2","qwertyuiop","2018",1.5f);
+        st[2] = new Student("congb3",175f,75f,"qwertyuiop",LocalDate.parse("29/09/2000",dateTimeFormatter),"qwertyuio3","qwertyuiop","2018",4.5f);
+        st[3] = new Student("congb4",175f,75f,"qwertyuiop",LocalDate.parse("29/09/2000",dateTimeFormatter),"qwertyuio4","qwertyuiop","2018",9.5f);
+        st[4] = new Student("congb5",175f,75f,"qwertyuiop",LocalDate.parse("29/09/2000",dateTimeFormatter),"qwertyuio5","qwertyuiop","2018",3.5f);
+        st[5] = new Student("congb6",175f,75f,"qwertyuiop",LocalDate.parse("29/09/2000",dateTimeFormatter),"qwertyuio6","qwertyuiop","2018",5.5f);
         while(true){
             System.out.println(
                             "1.Create Student\n" +
@@ -67,7 +70,11 @@ public class MainStatic {
             }
         }
     }
-
+    public static LocalDate stringToLocalDate(String date){
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate localDate = LocalDate.parse(date,dateTimeFormatter);
+        return  localDate;
+    }
     public static boolean  createOneStudent(Student st){
         try{
         Scanner sc = new Scanner(System.in);
@@ -82,15 +89,16 @@ public class MainStatic {
 
         System.out.print("Birth of Date:");
         String bod = sc.nextLine();
-        st.setBirthOfDate(bod);
-        while (!st.getBirthOfDate().matches(Constant.ConstantHuman.REGEX_BOD) && !st.getBirthOfDate().isEmpty()) {
+        st.setBirthOfDate(stringToLocalDate(bod));
+        while (!localDateToString(st.getBirthOfDate()).trim().matches(Constant.ConstantHuman.REGEX_BOD) && !localDateToString(st.getBirthOfDate()).trim().isEmpty()) {
             System.out.print("Birth of date is wrong format and not null!!!\nPlease enter according to format(DD/MM/YYYY): ");
             bod = sc.nextLine();
-            st.setBirthOfDate(bod);
-            if(bod.substring(bod.length()-5,bod.length()-1).length() < Constant.ConstantHuman.MIN_YEAR){
+            st.setBirthOfDate(stringToLocalDate(bod));
+            String birthOfDate = bod.toString();
+            if(birthOfDate.substring(birthOfDate.length()-5,birthOfDate.length()-1).length() < Constant.ConstantHuman.MIN_YEAR){
                 System.out.print("Year of birth is less than 1900!!!\nPlease enter again: ");
                 bod = sc.nextLine();
-                st.setBirthOfDate(bod);
+                st.setBirthOfDate(stringToLocalDate(bod));
             }
         }
         System.out.print("Address: ");
@@ -159,7 +167,7 @@ public class MainStatic {
     }
     public static Student[] createManyStudent(){
         Scanner sc = new Scanner(System.in);
-        System.out.print("Nhap so sinh vien: ");
+        System.out.print("Enter number of students: ");
         int totalStudent = Integer.parseInt(sc.nextLine());
         Student[] st= new Student[totalStudent];
         for(int i=0 ; i < totalStudent ; i++){
@@ -206,15 +214,16 @@ public class MainStatic {
 
         System.out.print("Birth of Date:");
         String bod = sc.nextLine();
-        st.setBirthOfDate(bod);
-        while (!st.getBirthOfDate().matches(Constant.ConstantHuman.REGEX_BOD) && !st.getBirthOfDate().isEmpty()) {
+        st.setBirthOfDate(stringToLocalDate(bod));
+        while (!localDateToString(st.getBirthOfDate()).matches(Constant.ConstantHuman.REGEX_BOD) && !localDateToString(st.getBirthOfDate()).isEmpty()) {
             System.out.print("Birth of date is wrong format and not null!!!\nPlease enter according to format(DD/MM/YYYY): ");
             bod = sc.nextLine();
-            st.setBirthOfDate(bod);
-            if(bod.substring(bod.length()-5,bod.length()-1).length() < Constant.ConstantHuman.MIN_YEAR){
+            st.setBirthOfDate(stringToLocalDate(bod));
+            String birthOfDate = bod.toString();
+            if(birthOfDate.substring(birthOfDate.length()-5,birthOfDate.length()-1).length() < Constant.ConstantHuman.MIN_YEAR){
                 System.out.print("Year of birth is less than 1900!!!\nPlease enter again: ");
                 bod = sc.nextLine();
-                st.setBirthOfDate(bod);
+                st.setBirthOfDate(stringToLocalDate(bod));
             }
         }
         System.out.print("Address: ");
@@ -336,6 +345,9 @@ public class MainStatic {
         System.out.println("------->>Information of student number " + (i + 1) + ": ");
         System.out.println(st[i].toString());
     }
-
-
+    public static String localDateToString(LocalDate localDate){
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String date = localDate.format(dateTimeFormatter);
+        return date;
+    }
 }

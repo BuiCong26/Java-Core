@@ -1,6 +1,7 @@
 package Object;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class Human implements Serializable {
     private static int initId = 1;
@@ -9,9 +10,9 @@ public class Human implements Serializable {
     private float height;
     private float weight;
     private String address;
-    private String birthOfDate;
+    private LocalDate birthOfDate;
 
-    public Human(String name, float height, float weight, String address, String birthOfDate) {
+    public Human(String name, float height, float weight, String address, LocalDate birthOfDate) {
         this.name = name;
         this.height = height;
         this.weight = weight;
@@ -63,11 +64,11 @@ public class Human implements Serializable {
         this.address = address;
     }
 
-    public String getBirthOfDate() {
+    public LocalDate getBirthOfDate() {
         return birthOfDate;
     }
 
-    public void setBirthOfDate(String birthOfDate) {
+    public void setBirthOfDate(LocalDate birthOfDate) {
         this.birthOfDate = birthOfDate;
     }
 

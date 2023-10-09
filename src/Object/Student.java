@@ -1,5 +1,7 @@
 package Object;
 
+import java.time.LocalDate;
+
 public class Student extends Human{
     private String studentId;
     private String school;
@@ -15,7 +17,7 @@ public class Student extends Human{
     outOfTen academicAbility;
 
 
-    public Student(String name, float height, float weight, String address, String birthOfDate, String studentId, String school, String startYear, float mediumScore) {
+    public Student(String name, float height, float weight, String address, LocalDate birthOfDate, String studentId, String school, String startYear, float mediumScore) {
         super(name, height, weight, address, birthOfDate);
         this.studentId = studentId;
         this.school = school;

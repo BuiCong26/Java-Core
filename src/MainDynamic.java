@@ -1,4 +1,6 @@
 import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -14,13 +16,14 @@ public class MainDynamic {
         }
     }
     public static void main(String[] args) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         Scanner sc = new Scanner(System.in);
-        Student st1 = new Student("congbt1",175f,75f,"qwertyuiop","27/07/2000","qwertyuio1","qwertyuiop","2018",9.6f);   //unit test
-        Student st2 = new Student("congb2",175f,75f,"qwertyuiop","29/09/2000","qwertyuio2","qwertyuiop","2018",1.5f);
-        Student st3 = new Student("congb3",175f,75f,"qwertyuiop","29/09/2000","qwertyuio3","qwertyuiop","2018",1.5f);
-        Student st4 = new Student("congb4",175f,75f,"qwertyuiop","29/09/2000","qwertyuio4","qwertyuiop","2018",1.5f);
-        Student st5 = new Student("congb5",175f,75f,"qwertyuiop","29/09/2000","qwertyuio5","qwertyuiop","2018",3.2f);
-        Student st6 = new Student("congb6",175f,75f,"qwertyuiop","29/09/2000","qwertyuio6","qwertyuiop","2018",6.5f);
+        Student st1 = new Student("congbt1",175f,75f,"qwertyuiop",LocalDate.parse("27/07/2000",dateTimeFormatter),"qwertyuio1","qwertyuiop","2018",9.6f);   //unit test
+        Student st2 = new Student("congb2",175f,75f,"qwertyuiop",LocalDate.parse("29/09/2000",dateTimeFormatter),"qwertyuio2","qwertyuiop","2018",1.5f);
+        Student st3 = new Student("congb3",175f,75f,"qwertyuiop",LocalDate.parse("29/09/2000",dateTimeFormatter),"qwertyuio3","qwertyuiop","2018",1.5f);
+        Student st4 = new Student("congb4",175f,75f,"qwertyuiop",LocalDate.parse("29/09/2000",dateTimeFormatter),"qwertyuio4","qwertyuiop","2018",1.5f);
+        Student st5 = new Student("congb5",175f,75f,"qwertyuiop",LocalDate.parse("29/09/2000",dateTimeFormatter),"qwertyuio5","qwertyuiop","2018",3.2f);
+        Student st6 = new Student("congb6",175f,75f,"qwertyuiop",LocalDate.parse("29/09/2000",dateTimeFormatter),"qwertyuio6","qwertyuiop","2018",6.5f);
         LinkedList<Student> st = new LinkedList<>();
         st.add(st1);
         st.add(st2);
@@ -125,15 +128,16 @@ public class MainDynamic {
 
         System.out.print("Birth of Date:");
         String bod = sc.nextLine();
-        st.setBirthOfDate(bod);
-        while (!st.getBirthOfDate().matches(Constant.ConstantHuman.REGEX_BOD) && !st.getBirthOfDate().isEmpty()) {
+        st.setBirthOfDate(stringToLocalDate(bod));
+        while (!localDateToString(st.getBirthOfDate()).trim().matches(Constant.ConstantHuman.REGEX_BOD) && !localDateToString(st.getBirthOfDate()).trim().isEmpty()) {
             System.out.print("Birth of date is wrong format and not null!!!\nPlease enter according to format(DD/MM/YYYY): ");
             bod = sc.nextLine();
-            st.setBirthOfDate(bod);
-            if(bod.substring(bod.length()-5,bod.length()-1).length() < Constant.ConstantHuman.MIN_YEAR){
+            st.setBirthOfDate(stringToLocalDate(bod));
+            String birthOfDate = bod.toString();
+            if(birthOfDate.substring(birthOfDate.length()-5,birthOfDate.length()-1).length() < Constant.ConstantHuman.MIN_YEAR){
                 System.out.print("Year of birth is less than 1900!!!\nPlease enter again: ");
                 bod = sc.nextLine();
-                st.setBirthOfDate(bod);
+                st.setBirthOfDate(stringToLocalDate(bod));
             }
         }
         System.out.print("Address: ");
@@ -243,15 +247,16 @@ public class MainDynamic {
 
         System.out.print("Birth of Date:");
         String bod = sc.nextLine();
-        st.setBirthOfDate(bod);
-        while (!st.getBirthOfDate().matches(Constant.ConstantHuman.REGEX_BOD) && !st.getBirthOfDate().isEmpty()) {
+        st.setBirthOfDate(stringToLocalDate(bod));
+        while (!localDateToString(st.getBirthOfDate()).trim().matches(Constant.ConstantHuman.REGEX_BOD) && !localDateToString(st.getBirthOfDate()).trim().isEmpty()) {
             System.out.print("Birth of date is wrong format and not null!!!\nPlease enter according to format(DD/MM/YYYY): ");
             bod = sc.nextLine();
-            st.setBirthOfDate(bod);
-            if(bod.substring(bod.length()-5,bod.length()-1).length() < Constant.ConstantHuman.MIN_YEAR){
+            st.setBirthOfDate(stringToLocalDate(bod));
+            String birthOfDate = bod.toString();
+            if(birthOfDate.substring(birthOfDate.length()-5,birthOfDate.length()-1).length() < Constant.ConstantHuman.MIN_YEAR){
                 System.out.print("Year of birth is less than 1900!!!\nPlease enter again: ");
                 bod = sc.nextLine();
-                st.setBirthOfDate(bod);
+                st.setBirthOfDate(stringToLocalDate(bod));
             }
         }
         System.out.print("Address: ");
@@ -471,6 +476,16 @@ public class MainDynamic {
     }
     public static void display(Student st) {
         System.out.println(st.toString());
+    }
+    public static LocalDate stringToLocalDate(String date){
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate localDate = LocalDate.parse(date,dateTimeFormatter);
+        return  localDate;
+    }
+    public static String localDateToString(LocalDate localDate){
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String date = localDate.format(dateTimeFormatter);
+        return date;
     }
 }
 
